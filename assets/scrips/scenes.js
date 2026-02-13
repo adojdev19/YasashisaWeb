@@ -14,7 +14,15 @@ const scenes = {
     "No es una superheroína —según ella—,\n" +
     "solo una pieza más de este enorme rompecabezas.\n\n" +
     "Solo quiere una vida de paz,\n" +
-    "tranquilidad.\n\n" +
+    "tranquilidad.\n\n",
+  next: "intro_01" // <-- aquí pones la escena 1 real de tu capítulo (la primera que ya tienes)
+
+
+},
+  intro_01: {
+  bg: "assets/backgrounds/pre_sakura_sunset.png",   // usa un fondo atardecer (puede ser el del preloader)
+  intro: true,                                // <-- bandera para comportamiento especial
+  text:
     "Que sus ideas y sus poemas fluyan en su cuaderno.\n" +
     "Sin hacer nada especial.\n" +
     "Sin atraer focos.\n" +
@@ -24,7 +32,9 @@ const scenes = {
     "sentadas en el silencio de la tranquilidad.",
   next: "chapter_1_card" // <-- aquí pones la escena 1 real de tu capítulo (la primera que ya tienes)
 
+
 },
+
 
   // ========= CAP 1: INTRO =========
 chapter_1_card: {
