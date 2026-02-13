@@ -1,658 +1,419 @@
-body {
-    margin: 0;
-    background: black;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
+/* =========================================
+   YASASHISA — MOBILE FIRST (iPhone 15)
+   Reemplaza tu styles.css completo por esto.
+   ========================================= */
+
+:root{
+  /* Tipografía */
+  --ui-font: 'Mochiy Pop One', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+  /* Caja diálogo */
+  --dlg-bg: rgba(0,0,0,0.62);
+  --dlg-pad-x: 4vw;
+  --dlg-pad-y: 1.6vh;
+
+  /* Tamaños texto */
+  --name-size: 2.0vh;
+  --text-size: 1.75vh;
+
+  /* Sprites */
+  --center-h: 92vh;  /* sprite principal */
+  --side-h: 82vh;    /* laterales si los usas */
 }
 
-#game {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-}
+*{ box-sizing: border-box; }
 
-
-#dialogueBox {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background: rgba(0,0,0,0.6);
-    color: white;
-    padding: 20px;
-}
-
-#name {
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-#text {
-    font-size: 18px;
-}
-
-#choices {
-  position: absolute;
-  bottom: 140px;
-  width: 100%;
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  padding: 10px;
-}
-
-.choiceBtn {
-  background: rgba(0,0,0,0.75);
-  color: white;
-  border: 1px solid rgba(255,255,255,0.3);
-  padding: 12px 18px;
-  cursor: pointer;
-  border-radius: 8px;
-  font-size: 16px;
-}
-
-.choiceBtn:hover {
-  background: rgba(255,255,255,0.1);
-}
-
-#background {
-  position: absolute;
+html, body{
   width: 100%;
   height: 100%;
+  margin: 0;
+  background: #000;
+  overflow: hidden;
+  font-family: var(--ui-font);
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+#game{
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ===== Background ===== */
+#background{
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center;
   opacity: 1;
   transition: opacity 0.35s ease;
-}
-
-#background {
   will-change: opacity;
 }
 
-.character {
-  position:absolute;
-  bottom:0;
-  height: 140vh;   /* base */
-  width:auto;
+/* ===== Characters ===== */
+.character{
+  position: absolute;
+  bottom: 0;
+  width: auto;
+  height: var(--center-h);
   transform-origin: bottom center;
-  bottom: -40.5vh;
   will-change: transform, opacity;
-    filter:
-    drop-shadow(0px 10px 18px rgba(0,0,0,0.35))
+
+  /* mejora visual sin matar performance */
+  filter:
+    drop-shadow(0px 12px 22px rgba(0,0,0,0.45))
     brightness(1.02)
     contrast(1.02)
-    sepia(0.18)
-    saturate(1.05);
-}
-#dialogueBox { z-index: 3; }
-#choices { z-index: 4; }
-
-#charLeft {
-  left: 20%;
-  transform: translateX(-50%);
+    sepia(0.14)
+    saturate(1.06);
 }
 
-#charCenter {
+/* mobile: centrado real, sin bottoms negativos */
+#charCenter{
   left: 50%;
   transform: translateX(-50%);
+  height: var(--center-h);
 }
 
-#charRight {
-  left: 80%;
+#charLeft{
+  left: 18%;
   transform: translateX(-50%);
-}
-.dim {
-  filter: brightness(60%);
-}
-
-.groundShadow{
-  position:absolute;
-  bottom: 1.2vh;
-  width: 220px;
-  height: 35px;
-  background: rgba(0,0,0,0.25);
-  border-radius: 50%;
-  z-index: 1;
-  opacity: 0.6;
+  height: var(--side-h);
+  opacity: 0.92;
 }
 
-#shadowLeft{ left:20%; transform: translateX(-50%); }
-#shadowCenter{ left:50%; transform: translateX(-50%); }
-#shadowRight{ left:80%; transform: translateX(-50%); }
-.dim { filter: brightness(0.60) !important; }
-
-.focused{
-  transform: translateX(-50%) scale(1.03);
+#charRight{
+  left: 82%;
+  transform: translateX(-50%);
+  height: var(--side-h);
+  opacity: 0.92;
 }
 
-.unfocused{
-  transform: translateX(-50%) scale(0.98);
-}
+/* Dim/focus */
+.dim{ filter: brightness(0.62) !important; }
+.focused{ transform: translateX(-50%) scale(1.02); }
+.unfocused{ transform: translateX(-50%) scale(0.98); }
 
-#charLeft{ left: 16%; transform: translateX(-50%); }
-#charRight{ left: 84%; transform: translateX(-50%); }
-
-#startScreen{
-  position:absolute;
-  inset:0;
-  z-index: 999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background: rgba(0,0,0,0.85);
-  color: white;
-}
-
-.startCard{
-  width: min(720px, 92vw);
-  background: rgba(20,20,20,0.9);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 14px;
-  padding: 22px 22px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-}
-
-.title{
-  font-size: 46px;
-  letter-spacing: 2px;
-  color: #ffffff;
-  text-shadow:
-    0 4px 20px rgba(0,0,0,0.25),
-    0 0 40px rgba(255, 190, 210, 0.7);
-}
-
-.subtitle{
-  margin: 0 0 14px 0;
-  opacity: 0.9;
-}
-
-.instructions{
-  background: rgba(0,0,0,0.35);
-  border: 1px solid rgba(234,137,154,0.10);
-  border-radius: 12px;
-  padding: 12px 14px;
-  margin: 14px 0 16px 0;
-}
-
-.instructions ul{
-  margin: 8px 0 0 18px;
-  padding: 0;
-}
-
-.startBtn{
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.25);
-  background: rgba(255,255,255,0.08);
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-.startBtn:hover{
-  background: rgba(255,255,255,0.14);
-}
-
-.hint{
-  margin: 10px 0 0 0;
-  opacity: 0.65;
-  font-size: 13px;
-  text-align: center;
-}
-
-.signature{
-  margin-top: 12px;
-  opacity: 0.85;
-  font-style: italic;
-  text-align: right;
-}
-
-.subtitle{
-  font-size: 20px;
-  margin-bottom: 12px;
-}
-
-/* =========================
-   START SCREEN (Sunset + Flowers)
-   ========================= */
-
-#startScreen{
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-  background: #000;
-}
-
-.title {
-  background: linear-gradient(180deg, #ffffff, #ffd9e8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
-/* FONDO PRINCIPAL: pon aquí tu imagen del atardecer */
-.sunsetBg{
+/* ===== Dialogue Box ===== */
+#dialogueBox{
   position: absolute;
-  inset: 0;
-  background-image: url("../backgrounds/pre_sakura_sunset.png"); /* <-imagen */
-  background-size: cover;
-  background-position: center;
-  transform: scale(1.03);
-  animation: subtleMove 12s ease-in-out infinite alternate;
-  filter: saturate(1.05) contrast(1.02);
-}
-
-/* Glow del sol + bruma romántica */
-.sunsetBg::before{
-  content:"";
-  position:absolute;
-  inset:-10%;
-  background:
-    radial-gradient(circle at 50% 45%,
-      rgba(255,214,160,0.70) 0%,
-      rgba(255,180,170,0.28) 22%,
-      rgba(255,180,170,0.00) 55%);
-  mix-blend-mode: screen;
-  filter: blur(6px);
-}
-
-/* Haze suave en el horizonte (le da “atardecer real”) */
-.sunsetBg::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(to bottom,
-      rgba(255,255,255,0.06) 0%,
-      rgba(255,210,220,0.10) 30%,
-      rgba(255,170,150,0.10) 55%,
-      rgba(20,14,24,0.22) 100%);
-}
-
-/* CAPA DE PÉTALOS (usa tu div .flowerLayer) */
-.flowerLayer{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:
-    radial-gradient(circle, rgba(255,210,230,0.75) 0 2px, transparent 3px) 10% 10%/220px 220px,
-    radial-gradient(circle, rgba(255,190,215,0.60) 0 2px, transparent 3px) 60% 20%/280px 280px,
-    radial-gradient(circle, rgba(255,220,240,0.45) 0 1.5px, transparent 3px) 30% 70%/200px 200px;
-  opacity: 0.55;
-  animation: petalsDrift 10s linear infinite;
-  filter: blur(0.2px);
-}
-
-/* Silueta suave tipo “ramas” (si no tienes PNG, esto igual aporta) */
-.flowerSilhouette{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:
-    radial-gradient(ellipse at 10% 35%, rgba(255,120,170,0.22), transparent 55%),
-    radial-gradient(ellipse at 90% 35%, rgba(255,120,170,0.22), transparent 55%);
-  filter: blur(2px);
-  opacity: 0.55;
-}
-
-/* Tarjeta */
-.startCard{
-  position: relative;
-  width: min(560px, 88vw);
-  padding: 26px 26px 18px;
-  border-radius: 18px;
-  background: rgba(30, 20, 26, 0.38);
-  border: 1px solid rgba(255,255,255,0.14);
-  box-shadow: 0 18px 60px rgba(0,0,0,0.45);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: rgba(255,255,255,0.92);
-}
-
-.badge{
-  display:inline-block;
-  font-size:12px;
-  letter-spacing:0.12em;
-  text-transform: uppercase;
-  padding:6px 10px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.14);
-  margin-bottom: 10px;
-}
-
-.title{ margin:0; font-size:42px; line-height:1.05; }
-.subtitle{ margin:10px 0 14px; opacity:0.92; }
-
-.instructions{
-  background: rgba(0,0,0,0.25);
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 12px;
-  padding: 14px 14px;
-  margin: 10px 0 14px;
-}
-
-.signature{
-  margin: 10px 0 14px;
-  text-align: right;
-  opacity: 0.82;
-  font-style: italic;
-}
-
-.startBtn{
-  width: 100%;
-  padding: 14px 16px;
-  border: 0;
-  border-radius: 12px;
-  background: linear-gradient(90deg, rgba(255,160,190,0.60), rgba(255,200,160,0.55));
-  color: rgba(255,255,255,0.92);
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-}
-
-.startBtn:hover{ filter: brightness(1.05); }
-
-@keyframes subtleMove{
-  from{ transform: scale(1.03) translateY(-6px); }
-  to{ transform: scale(1.06) translateY(6px); }
-}
-
-@keyframes petalsDrift{
-  from{ background-position: 10% -10%, 60% -20%, 30% -40%; }
-  to  { background-position: 12% 110%, 62% 120%, 32% 140%; }
-}
-
-/* ========= PRELOADER (solo pétalos) ========= */
-#startScreen {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-/* Card principal */
-.startCard {
-  position: relative;
-  z-index: 5;
-  width: 480px;
-  padding: 40px 45px;
-  border-radius: 30px;
-
-  font-family: 'Mochiy Pop One', sans-serif;
-  color: #fff;
-
-  background: rgba(255, 210, 220, 0.25);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-
-  box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.25),
-    inset 0 0 40px rgba(255, 255, 255, 0.08);
-
-  border: 1px solid rgba(255, 255, 255, 0.25);
-
-  text-align: center;
-}
-
-/* Badge superior */
-.badge {
-  display: inline-block;
-  font-size: 11px;
-  padding: 6px 14px;
-  border-radius: 20px;
-  margin-bottom: 20px;
-
-  background: rgba(255,255,255,0.2);
-  letter-spacing: 1px;
-  opacity: 0.9;
-}
-
-/* Título */
-.title {
-  font-size: 36px;
-  margin: 10px 0 8px 0;
-  letter-spacing: 2px;
-
-  text-shadow: 0 4px 15px rgba(255, 150, 180, 0.4);
-}
-
-/* Subtítulo */
-.subtitle {
-  font-size: 15px;
-  margin-bottom: 25px;
-  opacity: 0.95;
-}
-
-/* Caja instrucciones */
-
-
-.instructions p {
-  color: #fff;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.35);
-  line-height: 1.6;
-}
-
-/* Firma */
-.signature {
-  font-size: 12px;
-  text-align: right;
-  opacity: 0.9;
-  margin-bottom: 25px;
-}
-
-/* Botón */
-.startBtn {
-  width: 100%;
-  padding: 14px;
-  border-radius: 20px;
-  border: none;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-
-  font-family: 'Mochiy Pop One', sans-serif;
-  font-size: 14px;
-  letter-spacing: 1px;
-  font-weight: 600;
-
-  cursor: pointer;
-  transition: all 0.25s ease;
-
-  background: linear-gradient(90deg, #f4a7c3, #fbc2a4);
-  color: white;
-
-  box-shadow:
-    0 8px 20px rgba(255, 150, 180, 0.35);
-}
-
-/* Hover cute */
-.startBtn:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 12px 25px rgba(255, 150, 180, 0.5);
-}
-
-/* Click */
-.startBtn:active {
-  transform: translateY(0px);
-}
-
-/* capa de pétalos arriba de todo, pero sin bloquear clicks */
-.petalLayer{
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5; /* debajo de la tarjeta si quieres, o súbelo */
-}
-
-/* cada pétalo */
-.petal{
-  position: absolute;
-  top: -10vh;
   left: 0;
-  width: var(--size, 24px);
-  height: var(--size, 24px);
-  background-image: url("../backgrounds/petal.png"); /* <-- RUTA */
-  background-size: contain;
-  background-repeat: no-repeat;
-  opacity: var(--opacity, .8);
+  right: 0;
+  bottom: 0;
 
-  /* un poquito de suavidad */
-  filter: blur(var(--blur, 0px));
-  transform: translate3d(var(--x, 50vw), -10vh, 0) rotate(var(--rot, 0deg));
-  will-change: transform, opacity;
+  z-index: 30;
 
-  /* caida + sway + rotacion */
-  animation:
-    petalFall var(--fall, 12s) linear var(--delay, 0s) forwards,
-    petalSway var(--sway, 3.5s) ease-in-out var(--delay, 0s) infinite alternate,
-    petalSpin var(--spin, 6s) linear var(--delay, 0s) infinite;
+  background: var(--dlg-bg);
+  color: rgba(255,255,255,0.96);
+
+  padding:
+    calc(var(--dlg-pad-y) + env(safe-area-inset-top, 0px))
+    var(--dlg-pad-x)
+    calc(var(--dlg-pad-y) + env(safe-area-inset-bottom, 0px))
+    var(--dlg-pad-x);
+
+  /* para que sea legible y no tape TODO */
+  max-height: 34vh;
+  overflow: hidden;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  border-top: 1px solid rgba(255,255,255,0.10);
 }
 
-/* variación “frente” */
-.petal.front{
-  z-index: 6;
-  filter: blur(var(--blur, 0px)) drop-shadow(0 8px 10px rgba(0,0,0,.18));
+#name{
+  font-weight: 700;
+  font-size: clamp(14px, var(--name-size), 18px);
+  margin: 0 0 0.6vh 0;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.35);
 }
 
-/* variación “fondo” */
-.petal.back{
-  z-index: 4;
+#text{
+  font-size: clamp(14px, var(--text-size), 18px);
+  line-height: 1.55;
+  white-space: pre-wrap;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.35);
 }
 
-/* cae hasta abajo + un poco más */
-@keyframes petalFall{
-  to{
-    transform: translate3d(calc(var(--x, 50vw) + var(--drift, 0px)), 110vh, 0)
-               rotate(calc(var(--rot, 0deg) + var(--rot2, 360deg)));
-    opacity: 0;
-  }
+/* ===== Choices ===== */
+#choices{
+  position: absolute;
+  left: 0;
+  right: 0;
+
+  /* arriba del diálogo */
+  bottom: calc(34vh + 1vh);
+  z-index: 40;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  padding: 0 6vw;
+  pointer-events: auto;
 }
 
-/* viento en S (se combina con fall porque ambas animan transform, pero aquí es ok
-   porque fall aplica transform final; sway hace alternancia durante el recorrido).
-   Para máxima compatibilidad, usamos translateX solamente via CSS variable en drift.
-   (Suficiente realista y simple) */
-@keyframes petalSway{
-  from{ margin-left: calc(var(--swayAmp, 20px) * -1); }
-  to  { margin-left: var(--swayAmp, 20px); }
+.choiceBtn{
+  width: 100%;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 14px;
+
+  background: rgba(0,0,0,0.72);
+  color: rgba(255,255,255,0.96);
+
+  padding: 14px 14px;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
 }
 
-@keyframes petalSpin{
-  to{ rotate: 360deg; } /* rota sobre sí mismo */
+.choiceBtn:active{
+  transform: scale(0.99);
 }
 
-/*animaciones*/
-
-.mirror {
-  transform: scaleX(-1);
-  transition: transform 0.25s ease;
-}
-
-/* ===== MODO POEMA (usa el mismo dialogueBox) ===== */
+/* ===== Poem Mode ===== */
 #dialogueBox.poemMode{
-  top: 6vh;
-  bottom: 6vh;
-  left: 7vw;
-  right: 7vw;
+  top: 8vh;
+  bottom: 8vh;
+  left: 6vw;
+  right: 6vw;
   width: auto;
   position: absolute;
 
-  background: rgba(10, 10, 14, 0.78);
-  border-radius: 22px;
+  max-height: none;
+  overflow: hidden;
+
+  background: rgba(8,8,12,0.78);
+  border-radius: 18px;
   border: 1px solid rgba(255,255,255,0.12);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 
-  padding: 28px 28px;
+  padding: 3vh 5vw;
+
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
-/* ocultar name en poema */
-#dialogueBox.poemMode #name{
-  display: none;
-}
+#dialogueBox.poemMode #name{ display:none; }
 
 #dialogueBox.poemMode #text{
   text-align: center;
-  font-size: 20px;
-  line-height: 2.0;
-  color: rgba(255,255,255,0.95);
-  text-shadow: 0 2px 10px rgba(0,0,0,0.35);
-  white-space: pre-wrap;
+  font-size: clamp(15px, 2.1vh, 18px);
+  line-height: 1.95;
+  letter-spacing: 0.01em;
 }
 
-/* hint para continuar */
+/* hint poema */
 #poemHint{
-  margin-top: 18px;
+  margin-top: 14px;
   font-size: 12px;
-  opacity: 0.0;
+  opacity: 0;
   transition: opacity 0.35s ease;
   letter-spacing: 0.08em;
+  text-align: center;
 }
+#poemHint.show{ opacity: 0.9; }
 
-#poemHint.show{
-  opacity: 0.9;
-}
-
-#yazaPoema {
+/* Sprite poema esquina (si lo usas) */
+#yazaPoema{
   position: absolute;
-  bottom: 0;
-  right: 60px;
-  height: 380px;
-  z-index: 5;
+  right: 3vw;
+  bottom: calc(34vh + 1vh); /* que no choque con diálogo */
+  height: 26vh;
+  z-index: 25;
   display: none;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.40));
 }
 
-#yazaPoema {
-  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
-}
-
-#fadeOverlay{
-  position:absolute;
-  inset:0;
-  background:#000;
-  opacity:0;
-  pointer-events:none;
-  transition: opacity 1.2s ease;
-  z-index: 50;
-}
-
-/* Layout especial para intro: usa el mismo #dialogueBox, pero full-centro */
+/* ===== Intro/Epilogue Mode ===== */
 #dialogueBox.introMode{
   top: 12vh;
   bottom: 12vh;
-  left: 10vw;
-  right: 10vw;
+  left: 6vw;
+  right: 6vw;
   width: auto;
   position: absolute;
 
-  background: rgba(10, 10, 14, 0.65);
-  border-radius: 22px;
-  border: 1px solid rgba(255,255,255,0.10);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  max-height: none;
 
-  padding: 34px 30px;
+  background: rgba(8,8,12,0.70);
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+
+  padding: 3vh 5vw;
+
   display:flex;
   align-items:center;
   justify-content:center;
 }
 
 #dialogueBox.introMode #name{ display:none; }
-
 #dialogueBox.introMode #text{
   text-align:center;
-  font-size: 20px;
-  line-height: 2.05;
-  color: rgba(255,255,255,0.96);
-  text-shadow: 0 2px 12px rgba(0,0,0,0.35);
-  white-space: pre-wrap;
+  font-size: clamp(15px, 2.2vh, 19px);
+  line-height: 2.0;
+}
+
+/* ===== Fade Overlay ===== */
+#fadeOverlay{
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s ease;
+  z-index: 100;
+}
+
+/* ===== Mirror ===== */
+.mirror{
+  transform: translateX(-50%) scaleX(-1) !important;
+  transition: transform 0.25s ease;
+}
+
+/* =========================================
+   PRELOADER (startScreen) — mobile first
+   ========================================= */
+#startScreen{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+
+  display: grid;
+  place-items: center;
+
+  background: #000;
+  color: rgba(255,255,255,0.95);
+}
+
+.sunsetBg{
+  position: absolute;
+  inset: 0;
+  background-image: url("../backgrounds/pre_sakura_sunset.png");
+  background-size: cover;
+  background-position: center;
+
+  transform: scale(1.04);
+  animation: subtleMove 12s ease-in-out infinite alternate;
+
+  filter: saturate(1.06) contrast(1.03);
+}
+
+.sunsetBg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(to bottom,
+    rgba(255,255,255,0.06) 0%,
+    rgba(255,210,220,0.12) 35%,
+    rgba(255,170,150,0.12) 60%,
+    rgba(0,0,0,0.35) 100%);
+}
+
+/* capa pétalos (la tuya con JS) */
+.petalLayer{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.startCard{
+  position: relative;
+  z-index: 10;
+
+  width: min(92vw, 420px);
+  padding: 22px 18px;
+  border-radius: 18px;
+
+  text-align: center;
+
+  background: rgba(255, 210, 220, 0.22);
+  border: 1px solid rgba(255,255,255,0.22);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+}
+
+.badge{
+  display:inline-block;
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.20);
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+
+.title{
+  margin: 14px 0 6px;
+  font-size: clamp(28px, 4.2vh, 40px);
+  letter-spacing: 0.06em;
+
+  background: linear-gradient(180deg, #ffffff, #ffd9e8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow: 0 4px 18px rgba(0,0,0,0.22);
+}
+
+.subtitle{
+  margin: 0 0 12px;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+.instructions{
+  margin: 12px 0 12px;
+  padding: 12px 12px;
+  border-radius: 14px;
+
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.instructions p{
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+}
+
+.signature{
+  margin: 10px 0 14px;
+  font-size: 12px;
+  opacity: 0.88;
+  font-style: italic;
+  text-align: right;
+}
+
+.startBtn{
+  width: 100%;
+  padding: 14px 14px;
+  border: 0;
+  border-radius: 16px;
+
+  background: linear-gradient(90deg, #f4a7c3, #fbc2a4);
+  color: rgba(255,255,255,0.95);
+
+  font-size: 14px;
+  letter-spacing: 0.06em;
+
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+}
+
+.startBtn:active{ transform: scale(0.99); }
+
+@keyframes subtleMove{
+  from{ transform: scale(1.04) translateY(-6px); }
+  to{ transform: scale(1.08) translateY(6px); }
 }
