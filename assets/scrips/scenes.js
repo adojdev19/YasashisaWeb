@@ -6,15 +6,13 @@ const scenes = {
   intro: true,                                // <-- bandera para comportamiento especial
   text:
     "Tantas almas, tantos cuerpos, tantas ideas.\n" +
-    "Pensamientos, experiencias, todo sucediendo al mismo tiempo.\n\n" +
+    "Pensamientos, experiencias, todo sucediendo al mismo tiempo.\n" +
     "Todos somos nuestro propio universo;\n" +
-    "todos vemos y provocamos sucesos.\n\n" +
+    "todos vemos y provocamos sucesos.\n" +
     "Como Yasashisa, la gata normal.\n" +
-    "Solo una más.\n\n" +
+    "Solo una más.\n"+
     "No es una superheroína —según ella—,\n" +
-    "solo una pieza más de este enorme rompecabezas.\n\n" +
-    "Solo quiere una vida de paz,\n" +
-    "tranquilidad.\n\n",
+    "solo una pieza más de este enorme rompecabezas.\n\n",
   next: "intro_01" // <-- aquí pones la escena 1 real de tu capítulo (la primera que ya tienes)
 
 
@@ -23,7 +21,9 @@ const scenes = {
   bg: "assets/backgrounds/pre_sakura_sunset.png",   // usa un fondo atardecer (puede ser el del preloader)
   intro: true,                                // <-- bandera para comportamiento especial
   text:
-    "Que sus ideas y sus poemas fluyan en su cuaderno.\n" +
+    "Solo quiere una vida de paz,\n" +
+    "tranquilidad.\n\n"+  
+  "Que sus ideas y sus poemas fluyan en su cuaderno.\n" +
     "Sin hacer nada especial.\n" +
     "Sin atraer focos.\n" +
     "Sin generar miradas.\n\n" +
