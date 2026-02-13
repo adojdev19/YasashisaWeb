@@ -9,7 +9,7 @@ const bgm = document.getElementById("bgm");
 const fadeOverlay = document.getElementById("fadeOverlay");
 
 let currentMusic = null;
-let currentId = "intro_0";
+let currentId = "intro_1";
 let typing = false;
 let fullText = "";
 let typeToken = 0;
