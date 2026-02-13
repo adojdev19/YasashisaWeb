@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Yasashisa</title>
+<link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles/styles.css">
+</head>
+<body>
+
+<div id="game">
+
+    <!-- Fondo -->
+    <div id="background"></div>
+
+    <!-- Personaje -->
+    <img id="charLeft" class="character">
+    <img id="charCenter" class="character">
+    <img id="charRight" class="character">
+
+     <!-- Sombras -->
+    <div id="shadowLeft" class="groundShadow"></div>
+    <div id="shadowCenter" class="groundShadow"></div>
+    <div id="shadowRight" class="groundShadow"></div>
+
+    <!-- Caja de diálogo -->
+    <div id="dialogueBox">
+        <div id="name"></div>
+        <div id="text"></div>
+             <!-- Poema Hint-->
+    <div id="poemHint">— Haz click para continuar —</div>
+    </div>
+
+     <!-- decisiones-->
+    <div id="choices"></div>
+
+<!-- Pantalla de inicio / Preloader -->
+<div id="startScreen">
+  <div class="sunsetBg"></div>
+  <div class="flowerLayer"></div>
+  <div class="flowerSilhouette"></div>
+  <div class="petalLayer" aria-hidden="true"></div>
+
+  <div class="startCard">
+    <div class="badge">Visual Novel</div>
+
+    <h1 class="title">Yasashisa</h1>
+
+    <p class="subtitle">Bienvenida MM 😊</p>
+
+    <div class="instructions">
+      <p>
+        Haz click en la pantalla para avanzar el texto.<br>
+        Cuando aparezcan decisiones, elige con los botones.
+      </p>
+    </div>
+
+    <p class="signature">
+      Diviértete y espero te guste.<br>
+      — Adoj
+    </p>
+
+    <button id="startBtn" class="startBtn">Comenzar</button>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<div id="fadeOverlay"></div>
+
+</div>
+
+<audio id="bgm" loop></audio>
+
+<script src="assets/scrips/preloader.js"></script>
+<script src="assets/scrips/scenes.js"></script>
+<script src="assets/scrips/game.js"></script>
+
+</body>
+</html>
